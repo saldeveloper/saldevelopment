@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Portfolio - About</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: rgb(255, 0, 123);
+      background: #000;
+      overflow: hidden;
+    }
+    .about {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .about h1, .about p {
+      margin: 10px 0;
+    }
+    .social-links a {
+      color: #00ff00;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="about">
+    <h1>Hi there i'm SAL</h1>
+    <p>I'm a developer You let me do anything. </p>
+    <p>Contact me by : </p>
+    <div class="social-links">
+      <a href="https://www.facebook.com/zukisal007?mibextid=kFxxJDs">Facebook</a>
+      <a href="https://t.me/nhsalnghah">Telegram</a>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const particles = [];
+    const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+    const particleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+    for (let i = 0; i < 500; i++) {
+      const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+      particle.position.set(
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10
+      );
+      scene.add(particle);
+      particles.push(particle);
+    }
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      particles.forEach(p => {
+        p.position.y -= 0.01;
+        if (p.position.y < -5) p.position.y = 5;
+      });
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
